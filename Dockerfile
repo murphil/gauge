@@ -20,6 +20,7 @@ USER $USERNAME
 WORKDIR /app
 
 RUN set -eux \
+  ; chown USER_UID:USER_GID /app \
   ; gauge telemetry off \
-  ; gauge install js \
-  ; gauge install html-report
+  ; gauge init js_puppeteer \
+  ; gauge run
