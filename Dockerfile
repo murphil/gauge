@@ -16,11 +16,13 @@ RUN set -eux \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
-USER $USERNAME
+
+
 WORKDIR /app
+RUN chown USER_UID:USER_GID /app
+USER $USERNAME
 
 RUN set -eux \
-  ; chown USER_UID:USER_GID /app \
   ; gauge telemetry off \
   ; gauge init js_puppeteer \
   ; gauge run
