@@ -18,7 +18,7 @@ RUN set -eux \
 #ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
 
 WORKDIR /app
-RUN chown USER_UID:USER_GID /app
+RUN chown $USER_UID:$USER_GID /app
 USER $USERNAME
 
 RUN set -eux \
