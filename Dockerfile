@@ -17,6 +17,7 @@ RUN set -eux \
 
 ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
 ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
+ENV headless_chrome=true
 
 WORKDIR /app
 RUN set -eux \
