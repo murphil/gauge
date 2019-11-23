@@ -27,9 +27,9 @@ USER $USERNAME
 RUN set -eux \
   ; gauge telemetry off \
   ; gauge init js \
-  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js
+  ; gauge run
+  #; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js
 
-RUN gauge run
 
 
 
