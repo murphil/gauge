@@ -24,5 +24,5 @@ USER $USERNAME
 
 RUN set -eux \
   ; gauge telemetry off \
-  ; gauge init js_puppeteer \
+  ; gauge init js \
   ; gauge run
