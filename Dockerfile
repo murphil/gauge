@@ -13,6 +13,7 @@ RUN set -eux \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
       gauge zsh git sqlite3 iproute2 chromium-driver \
+      libgconf-2-4 \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
