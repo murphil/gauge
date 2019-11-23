@@ -42,7 +42,8 @@ RUN set -eux \
   #; gauge install spectacle-report -f spectacle-*.zip \
   ; cd .. \
   ; rm -rf tmp \
-  ; gauge init js
+  ; gauge init js \
+  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js
 
 RUN gauge run
 
