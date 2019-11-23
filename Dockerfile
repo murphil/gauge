@@ -23,28 +23,11 @@ RUN set -eux \
   ; chown $USER_UID:$USER_GID /app
 USER $USERNAME
 
-ARG js_runner_url=https://github.com/getgauge/gauge-js/releases/download/v2.3.6/gauge-js-offline-2.3.6.zip
-ARG html_report_url=https://github.com/getgauge/html-report/releases/download/v4.0.8/html-report-4.0.8-linux.x86_64.zip
-ARG json_report_url=https://github.com/getgauge-contrib/json-report/releases/download/v0.3.2/json-report-0.3.2-linux.x86_64.zip
-#ARG spectacle_report_url=https://github.com/getgauge/spectacle/releases/download/v0.1.3/spectacle-0.1.3-linux.x86_64.zip
-
 RUN set -eux \
   ; gauge telemetry off \
-  ; mkdir tmp \
-  ; cd tmp \
-  ; wget -q ${js_runner_url} \
-  ; wget -q ${html_report_url} \
-  ; wget -q ${json_report_url} \
-  #; wget -q ${spectacle_report_url} \
-  ; gauge install js -f gauge-js-*.zip \
-  ; gauge install html-report -f html-report-*.zip \
-  ; gauge install json-report -f json-report-*.zip \
-  #; gauge install spectacle-report -f spectacle-*.zip \
-  ; cd .. \
-  ; rm -rf tmp \
   ; gauge init js \
-  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js
+  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
+  ; gauge run
 
-RUN gauge run
 
 
