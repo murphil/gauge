@@ -12,24 +12,23 @@ RUN set -eux \
   ; apt-get upgrade -y \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
-      gauge zsh git sqlite3 iproute2 chromium-driver \
+      gauge procps zsh git sqlite3 iproute2 chromium-driver \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 ENV CHROME_DEVEL_SANDBOX=/usr/bin/chromium
-ENV TAIKO_BROWSER_PATH=${CHROME_DEVEL_SANDBOX}
+ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
 ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
-
-
-ARG js_runner_url=https://github.com/getgauge/gauge-js/releases/download/v2.3.6/gauge-js-offline-2.3.6.zip
-ARG html_report_url=https://github.com/getgauge/html-report/releases/download/v4.0.8/html-report-4.0.8-linux.x86_64.zip
-ARG json_report_url=https://github.com/getgauge-contrib/json-report/releases/download/v0.3.2/json-report-0.3.2-linux.x86_64.zip
-#ARG spectacle_report_url=https://github.com/getgauge/spectacle/releases/download/v0.1.3/spectacle-0.1.3-linux.x86_64.zip
 
 WORKDIR /app
 RUN set -eux \
   ; chown $USER_UID:$USER_GID /app \
   ; chmod 4755 ${CHROME_DEVEL_SANDBOX}
 USER $USERNAME
+
+ARG js_runner_url=https://github.com/getgauge/gauge-js/releases/download/v2.3.6/gauge-js-offline-2.3.6.zip
+ARG html_report_url=https://github.com/getgauge/html-report/releases/download/v4.0.8/html-report-4.0.8-linux.x86_64.zip
+ARG json_report_url=https://github.com/getgauge-contrib/json-report/releases/download/v0.3.2/json-report-0.3.2-linux.x86_64.zip
+#ARG spectacle_report_url=https://github.com/getgauge/spectacle/releases/download/v0.1.3/spectacle-0.1.3-linux.x86_64.zip
 
 RUN set -eux \
   ; gauge telemetry off \
@@ -45,7 +44,8 @@ RUN set -eux \
   #; gauge install spectacle-report -f spectacle-*.zip \
   ; cd .. \
   ; rm -rf tmp \
-  ; gauge init js \
-  ; gauge run
+  ; gauge init js
+
+RUN gauge run
 
 
