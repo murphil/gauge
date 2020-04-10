@@ -12,7 +12,7 @@ RUN set -eux \
   ; apt-get upgrade -y \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
-      gauge procps zsh git sqlite3 iproute2 chromium-driver \
+      gauge procps zsh git iproute2 chromium-driver \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
