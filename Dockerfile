@@ -4,12 +4,23 @@ ARG USERNAME=node
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
+ENV LANG=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV TIMEZONE=Asia/Shanghai
+
 RUN set -eux \
   ; apt-get update \
   ; apt-get upgrade -y \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
+      locales tzdata ca-certificates \
       procps zsh gnupg git iproute2 curl \
+  ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
+  ; echo "$TIMEZONE" > /etc/timezone \
+  ; sed -i /etc/locale.gen \
+		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
+		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
+	; locale-gen \
   ; apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys 023EDB0B \
   ; echo deb https://dl.bintray.com/gauge/gauge-deb stable main | tee -a /etc/apt/sources.list \
   ; apt-get update \
