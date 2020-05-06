@@ -47,7 +47,7 @@ RUN set -eux \
   ; chown $USER_UID:$USER_GID /app
 USER $USERNAME
 
-RUN set -eux \
+RUN set -x \
   ; gauge telemetry off \
   ; gauge init js \
   ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
