@@ -12,15 +12,11 @@ ENV NODE_HOME=/opt/node NODE_VERSION=12.16.3
 ENV PATH=${NODE_HOME}/bin:$PATH
 
 RUN set -eux \
-  ; mkdir -p ${NODE_HOME} \
-  ; wget -q -O- https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz \
-    | tar xJ -C ${NODE_HOME} --strip-components 1 \
-  ; chown -R root:root ${NODE_HOME} \
   ; apt-get update \
   ; apt-get upgrade -y \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
-      locales tzdata ca-certificates \
+      locales tzdata ca-certificates xz-utils \
       procps zsh gnupg git iproute2 curl \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -28,6 +24,12 @@ RUN set -eux \
 		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
 		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
 	; locale-gen \
+  \
+  ; mkdir -p ${NODE_HOME} \
+  ; curl https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz \
+    | tar xJ -C ${NODE_HOME} --strip-components 1 \
+  ; chown -R root:root ${NODE_HOME} \
+  \
   ; apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys 023EDB0B \
   ; echo deb https://dl.bintray.com/gauge/gauge-deb stable main | tee -a /etc/apt/sources.list \
   ; apt-get update \
