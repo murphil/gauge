@@ -35,7 +35,7 @@ RUN set -eux \
   ; apt-get update \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
-      gauge chromium-browser chromium-driver \
+      gauge chromium-browser \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
