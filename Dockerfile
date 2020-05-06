@@ -1,6 +1,6 @@
-FROM node:12-buster-slim
+FROM ubuntu:focal
 
-ARG USERNAME=node
+ARG USERNAME=gauge
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
@@ -8,7 +8,14 @@ ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
 ENV TIMEZONE=Asia/Shanghai
 
+ENV NODE_HOME=/opt/node NODE_VERSION=12.16.3
+ENV PATH=${NODE_HOME}/bin:$PATH
+
 RUN set -eux \
+  ; mkdir -p ${NODE_HOME} \
+  ; wget -q -O- https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz \
+    | tar xJ -C ${NODE_HOME} --strip-components 1 \
+  ; chown -R root:root ${NODE_HOME} \
   ; apt-get update \
   ; apt-get upgrade -y \
   ; DEBIAN_FRONTEND=noninteractive \
