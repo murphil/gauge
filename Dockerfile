@@ -11,10 +11,6 @@ ENV TIMEZONE=Asia/Shanghai
 ENV NODE_HOME=/opt/node NODE_VERSION=12.16.3
 ENV PATH=${NODE_HOME}/bin:$PATH
 
-ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
-ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
-ENV headless_chrome=true
-
 RUN set -eux \
   ; apt-get update \
   ; apt-get upgrade -y \
@@ -34,21 +30,28 @@ RUN set -eux \
     | tar xJ -C ${NODE_HOME} --strip-components 1 \
   ; chown -R root:root ${NODE_HOME} \
   \
-  ; apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys 023EDB0B \
+  ; apt-key adv --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys 023EDB0B \
   ; echo deb https://dl.bintray.com/gauge/gauge-deb stable main | tee -a /etc/apt/sources.list \
   ; apt-get update \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
-      gauge chromium-browser \
+      gauge \
+  ; gauge install js \
+  ; gauge install html-report \
+  ; gauge install screenshot \
+  ; gauge telemetry off \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+#ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
+#ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
+ENV headless_chrome=true
 
 WORKDIR /app
 RUN set -eux \
   ; chown $USER_UID:$USER_GID /app
 USER $USERNAME
 
-RUN set -x \
-  ; gauge telemetry off \
-  ; gauge init js \
-  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
-  ; gauge run
+# RUN set -x \
+#   ; gauge init js \
+#   ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
+#   ; gauge run
