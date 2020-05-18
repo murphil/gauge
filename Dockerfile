@@ -48,6 +48,7 @@ ENV headless_chrome=true
 
 WORKDIR /app
 RUN set -eux \
+  ; useradd -m gauge -s /bin/zsh \
   ; chown $USER_UID:$USER_GID /app
 USER $USERNAME
 
