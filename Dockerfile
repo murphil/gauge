@@ -11,6 +11,10 @@ ENV TIMEZONE=Asia/Shanghai
 ENV NODE_HOME=/opt/node NODE_VERSION=12.16.3
 ENV PATH=${NODE_HOME}/bin:$PATH
 
+ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
+ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
+ENV headless_chrome=true
+
 RUN set -eux \
   ; apt-get update \
   ; apt-get upgrade -y \
@@ -37,10 +41,6 @@ RUN set -eux \
     apt-get install -y --no-install-recommends \
       gauge chromium-browser \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
-ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
-ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
-ENV headless_chrome=true
 
 WORKDIR /app
 RUN set -eux \
