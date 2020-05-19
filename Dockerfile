@@ -17,7 +17,7 @@ RUN set -eux \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
       locales tzdata ca-certificates xz-utils \
-      procps zsh gnupg git iproute2 curl \
+      procps gnupg openssh-client git iproute2 curl \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
   ; sed -i /etc/locale.gen \
