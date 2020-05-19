@@ -53,6 +53,7 @@ RUN set -eux \
 USER $USERNAME
 
 RUN set -x \
-  ; gauge init js \
-  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
-  ; gauge run
+  ; gauge init js
+#  \
+#  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
+#  ; gauge run
