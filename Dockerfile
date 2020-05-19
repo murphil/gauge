@@ -36,10 +36,6 @@ RUN set -eux \
   ; DEBIAN_FRONTEND=noninteractive \
     apt-get install -y --no-install-recommends \
       gauge \
-  ; gauge install js \
-  ; gauge install html-report \
-  ; gauge install screenshot \
-  ; gauge telemetry off \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 #ENV TAIKO_BROWSER_PATH=/usr/bin/chromium
@@ -53,7 +49,11 @@ RUN set -eux \
 USER $USERNAME
 
 RUN set -x \
-  ; gauge init js
+  ; gauge init js \
+  ; gauge install js \
+  ; gauge install html-report \
+  ; gauge install screenshot \
+  ; gauge telemetry off
 #  \
 #  ; sed -i 's!\(: headless\)!\1, args: ['"\'--no-sandbox\'"']!' tests/step_implementation.js \
 #  ; gauge run
